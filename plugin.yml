@@ -1,0 +1,6 @@
+main: pisi.unitedmeows.pispigot.Pispigot
+name: Pispigot
+version: '0.1'
+description: Pispigot; pisiEventApi spigot wrapper
+author: slowcheet4h
+softdepend: [ProtocolLib]
