@@ -3,6 +3,7 @@ package pisi.unitedmeows.pispigot;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import pisi.unitedmeows.eventapi.event.Event;
 import pisi.unitedmeows.eventapi.system.BasicEventSystem;
 import pisi.unitedmeows.pispigot.rawlistener.PRawListener;
 

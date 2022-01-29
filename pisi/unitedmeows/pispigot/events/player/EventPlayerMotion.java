@@ -1,4 +1,4 @@
-package pisi.unitedmeows.pispigot.events;
+package pisi.unitedmeows.pispigot.events.player;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

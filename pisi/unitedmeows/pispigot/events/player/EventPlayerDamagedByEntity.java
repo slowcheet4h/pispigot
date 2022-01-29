@@ -1,8 +1,8 @@
-package pisi.unitedmeows.pispigot.events;
+package pisi.unitedmeows.pispigot.events.player;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import pisi.unitedmeows.eventapi.event.Event;
+import pisi.unitedmeows.pispigot.events.PlayerEvent;
 
 public class EventPlayerDamagedByEntity extends PlayerEvent {
 

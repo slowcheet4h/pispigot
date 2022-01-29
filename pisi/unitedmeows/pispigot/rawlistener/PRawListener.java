@@ -2,17 +2,15 @@ package pisi.unitedmeows.pispigot.rawlistener;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import pisi.unitedmeows.pispigot.Pispigot;
-import pisi.unitedmeows.pispigot.events.EventPlayerAttack;
-import pisi.unitedmeows.pispigot.events.EventPlayerDamagedByEntity;
-import pisi.unitedmeows.pispigot.events.EventPlayerMotion;
+import pisi.unitedmeows.pispigot.events.player.EventPlayerAttack;
+import pisi.unitedmeows.pispigot.events.player.EventPlayerBed;
+import pisi.unitedmeows.pispigot.events.player.EventPlayerDamagedByEntity;
+import pisi.unitedmeows.pispigot.events.player.EventPlayerMotion;
 
 public class PRawListener implements Listener {
 
@@ -26,6 +24,20 @@ public class PRawListener implements Listener {
 	public void onLeave(PlayerQuitEvent event) {
 		Pispigot.removeSystem(event.getPlayer());
 	}
+
+	@EventHandler
+	public void onBedEnter(PlayerBedEnterEvent event) {
+		final EventPlayerBed pisiEvent = new EventPlayerBed(event.getPlayer(), event.getBed(), EventPlayerBed.BedAction.SLEEP);
+		pisiEvent.setCanceled(event.isCancelled());
+		Pispigot.eventSystem(event.getPlayer()).fire(pisiEvent);
+		event.setCancelled(pisiEvent.isCanceled());
+	}
+
+	@EventHandler
+	public void onBedLeave(PlayerBedLeaveEvent event) {
+		Pispigot.eventSystem(event.getPlayer()).fire(new EventPlayerBed(event.getPlayer(), event.getBed(), EventPlayerBed.BedAction.LEAVE));
+	}
+
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
