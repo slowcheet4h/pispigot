@@ -2,10 +2,10 @@ package pisi.unitedmeows.pispigot.events.player;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
 import pisi.unitedmeows.pispigot.events.PlayerEvent;
 
 public class EventPlayerBed extends PlayerEvent {
-
 	private Block bed;
 	private BedAction action;
 
@@ -19,7 +19,7 @@ public class EventPlayerBed extends PlayerEvent {
 		return bed;
 	}
 
-	public static enum BedAction {
+	public enum BedAction {
 		SLEEP,
 		LEAVE
 	}
