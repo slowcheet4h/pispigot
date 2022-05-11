@@ -1,19 +1,16 @@
 package pisi.unitedmeows.pispigot.rawlistener;
 
+import static pisi.unitedmeows.pispigot.events.player.EventPlayerBed.BedAction.*;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 
 import pisi.unitedmeows.pispigot.Pispigot;
-import pisi.unitedmeows.pispigot.events.player.EventPlayerAttack;
-import pisi.unitedmeows.pispigot.events.player.EventPlayerBed;
-import pisi.unitedmeows.pispigot.events.player.EventPlayerDamagedByEntity;
-import pisi.unitedmeows.pispigot.events.player.EventPlayerMotion;
+import pisi.unitedmeows.pispigot.events.player.*;
 
 public class PRawListener implements Listener {
 	@EventHandler
@@ -25,8 +22,38 @@ public class PRawListener implements Listener {
 	}
 
 	@EventHandler
+	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+		EventAsyncPlayerChat asyncPlayerChat = new EventAsyncPlayerChat(event.getPlayer(), event.getMessage(), event.getRecipients());
+		asyncPlayerChat.setCanceled(event.isCancelled());
+		Pispigot.get().eventSystem().fire(asyncPlayerChat);
+		event.setCancelled(asyncPlayerChat.isCanceled());
+		event.setMessage(asyncPlayerChat.message());
+		event.setFormat(asyncPlayerChat.format());
+	}
+
+	@EventHandler
+	public void onChatTabComplete(PlayerChatTabCompleteEvent event) {
+		Pispigot.get().eventSystem().fire(new EventPlayerChatTabComplete(event.getPlayer(), event.getChatMessage(), event.getTabCompletions()));
+	}
+
+	@EventHandler
+	public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
+		EventPlayerCommandPreprocess eventPlayerChatTabComplete = new EventPlayerCommandPreprocess(event.getPlayer(), event.getMessage(), event.getRecipients());
+		eventPlayerChatTabComplete.setCanceled(event.isCancelled());
+		Pispigot.get().eventSystem().fire(eventPlayerChatTabComplete);
+		event.setCancelled(eventPlayerChatTabComplete.isCanceled());
+		event.setFormat(eventPlayerChatTabComplete.format());
+		event.setMessage(eventPlayerChatTabComplete.message());
+	}
+
+	@EventHandler
+	public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+		Pispigot.get().eventSystem().fire(new EventPlayerChangedWorld(event.getPlayer(), event.getFrom()));
+	}
+
+	@EventHandler
 	public void onBedLeave(PlayerBedLeaveEvent event) {
-		Pispigot.get().eventSystem().fire(new EventPlayerBed(event.getPlayer(), event.getBed(), EventPlayerBed.BedAction.LEAVE));
+		Pispigot.get().eventSystem().fire(new EventPlayerBed(event.getPlayer(), event.getBed(), LEAVE));
 	}
 
 	@EventHandler
